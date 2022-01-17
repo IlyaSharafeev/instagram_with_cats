@@ -25,10 +25,8 @@
       methods:{
          ...mapActions(['getMyImagesCatsFromApi'])
       },
-      mounted(){
-         if(this.getMyCats == 0){
-            this.getMyImagesCatsFromApi()
-         }
+      created(){
+         this.getMyImagesCatsFromApi()
       }
    }
 </script>

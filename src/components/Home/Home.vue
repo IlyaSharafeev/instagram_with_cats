@@ -26,9 +26,7 @@
       created() {
          window.addEventListener("scroll", this.trigger);
          if(this.getImagesCats.length == 0){
-            for(let i = 0; i < 9; i++){
                this.getImagesCatsFromApi()
-            }
          }
       },
       methods: {
