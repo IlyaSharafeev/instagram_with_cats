@@ -47,7 +47,7 @@
    }
 
    .header {
-      background-color: #fff;
+      background-color: rgb(255, 113, 113);
       box-shadow: 1px 1px 61px 0 rgba(0, 0, 0, .1);
       position: fixed;
       top: 0;

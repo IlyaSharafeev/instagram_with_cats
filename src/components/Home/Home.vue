@@ -23,10 +23,10 @@
             flag: true
          }
       },
-      created() {
+      beforeMount() {
          window.addEventListener("scroll", this.trigger);
          if(this.getImagesCats.length == 0){
-               this.getImagesCatsFromApi()
+            this.getImagesCatsFromApi()
          }
       },
       methods: {

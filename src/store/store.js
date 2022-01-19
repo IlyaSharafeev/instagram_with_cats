@@ -57,6 +57,12 @@ export default new Vuex.Store({
                }
                console.log(arrUrl)
 
+               // let arrId = [];
+               // for(let i = 0; i < response.data.length; i++){
+               //    arrId.push(response.data[i].id)
+               // }
+               // console.log(arrId)
+
                commit('setMyImagesCats', arrUrl)
                return response;
             })
