@@ -40,7 +40,7 @@
                var position = scrolled + screenHeight
 
             if (position >= threshold) {
-               this.getImagesCatsFromApi()
+               setTimeout((this.getImagesCatsFromApi()), 2000) 
             }
          },
       },

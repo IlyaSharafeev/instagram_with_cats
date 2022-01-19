@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from 'vuex';
-import axios from 'axios'
-Vue.use(Vuex)
+import axios from 'axios';
+Vue.use(Vuex);
 
 export default new Vuex.Store({
    actions: {
@@ -20,7 +20,7 @@ export default new Vuex.Store({
                }
                console.log(arrUrl)
                commit('setImagesCats', arrUrl)
-               arrUrl = []
+               arrUrl = [];
                return response;
             })
             .catch((error) => {
@@ -36,7 +36,6 @@ export default new Vuex.Store({
                }
             })
             .then((response) => {
-               console.log(response)
                return response;
             })
             .catch((error) => {
@@ -55,13 +54,6 @@ export default new Vuex.Store({
                for(let i = 0; i < response.data.length; i++){
                   arrUrl.push(response.data[i].url)
                }
-               console.log(arrUrl)
-
-               // let arrId = [];
-               // for(let i = 0; i < response.data.length; i++){
-               //    arrId.push(response.data[i].id)
-               // }
-               // console.log(arrId)
 
                commit('setMyImagesCats', arrUrl)
                return response;
