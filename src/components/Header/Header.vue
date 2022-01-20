@@ -32,6 +32,9 @@
          return {
             logo
          }
+      },
+      created() {
+         localStorage.setItem('countPage', 1)
       }
    }
 </script>

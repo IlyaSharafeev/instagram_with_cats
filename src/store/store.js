@@ -8,19 +8,22 @@ export default new Vuex.Store({
       getImagesCatsFromApi({
          commit
       }) {
+         let countPage = localStorage.getItem('countPage');
          axios.defaults.headers.common['x-api-key'] = "70d5920f-a09c-4dd8-8f17-f9f654d46902"
          axios.get('https://api.thecatapi.com/v1/images/search', {params:{
-            order: 'DESC',
-            limit: 59
+            order: 'Desc',
+            limit: 20,
+            page: countPage,
+            size: 'small'
          }})
             .then((response) => {
                let arrUrl = [];
                for(let i = 0; i < response.data.length; i++){
                   arrUrl.push(response.data[i].url)
                }
-               console.log(arrUrl)
                commit('setImagesCats', arrUrl)
                arrUrl = [];
+               localStorage.setItem('countPage', ++countPage) 
                return response;
             })
             .catch((error) => {

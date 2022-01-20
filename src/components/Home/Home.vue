@@ -18,31 +18,43 @@
       computed: {
          ...mapGetters(['getImagesCats'])
       },
-      data(){
+      data() {
          return {
             flag: true
          }
       },
       beforeMount() {
          window.addEventListener("scroll", this.trigger);
-         if(this.getImagesCats.length == 0){
-            this.getImagesCatsFromApi()
+         if (this.getImagesCats.length == 0) {
+            this.debounce(this.getImagesCatsFromApi(), 1000)
          }
       },
       methods: {
          ...mapActions(["getImagesCatsFromApi"]),
          trigger() {
-               const height = document.body.offsetHeight
-               const screenHeight = window.innerHeight
-               const scrolled = window.scrollY
-               var threshold = height - screenHeight / 4
-               // Отслеживаем, где находится низ экрана относительно страницы.
-               var position = scrolled + screenHeight
+            const height = document.body.offsetHeight
+            const screenHeight = window.innerHeight
+            const scrolled = window.scrollY
+            var threshold = height - screenHeight / 4
+            // Отслеживаем, где находится низ экрана относительно страницы.
+            var position = scrolled + screenHeight
 
             if (position >= threshold) {
-               setTimeout((this.getImagesCatsFromApi()), 2000) 
+               this.debounce(this.getImagesCatsFromApi(), 1000)
             }
          },
+         debounce(fn, ms) {
+            let timeout;
+            return function () {
+               const fnCall = () => {
+                  fn.apply(this, arguments)
+               }
+
+               clearTimeout(timeout)
+
+               timeout = setTimeout(fnCall, ms)
+            }
+         }
       },
    };
 </script>
