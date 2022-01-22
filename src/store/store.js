@@ -2,21 +2,24 @@ import Vue from "vue";
 import Vuex from 'vuex';
 import axios from 'axios';
 Vue.use(Vuex);
+var REQ = null
 
 export default new Vuex.Store({
    actions: {
       getImagesCatsFromApi({
          commit
       }) {
-         let countPage = localStorage.getItem('countPage');
-         axios.defaults.headers.common['x-api-key'] = "70d5920f-a09c-4dd8-8f17-f9f654d46902"
-         axios.get('https://api.thecatapi.com/v1/images/search', {params:{
+         let request = axios.get('https://api.thecatapi.com/v1/images/search', {params:{
             order: 'Desc',
             limit: 20,
             page: countPage,
             size: 'small'
          }})
-            .then((response) => {
+         let countPage = localStorage.getItem('countPage');
+         axios.defaults.headers.common['x-api-key'] = "70d5920f-a09c-4dd8-8f17-f9f654d46902"
+         if(!REQ){
+            REQ = request;
+             REQ.then((response) => {
                let arrUrl = [];
                for(let i = 0; i < response.data.length; i++){
                   arrUrl.push(response.data[i].url)
@@ -29,6 +32,9 @@ export default new Vuex.Store({
             .catch((error) => {
                console.log(error);
             })
+            REQ = null
+         }
+           
       },
       postImageCatFromApi(
          commit, data) {
