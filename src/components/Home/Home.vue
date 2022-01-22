@@ -26,7 +26,7 @@
       beforeMount() {
          window.addEventListener("scroll", this.trigger);
          if (this.getImagesCats.length == 0) {
-            this.debounce(this.getImagesCatsFromApi(), 1000)
+            this.debounce(this.getImagesCatsFromApi(), 2500)
          }
       },
       methods: {
@@ -40,7 +40,7 @@
             var position = scrolled + screenHeight
 
             if (position >= threshold) {
-               this.debounce(this.getImagesCatsFromApi(), 1000)
+               this.debounce(this.getImagesCatsFromApi(), 200)
             }
          },
          debounce(fn, ms) {
@@ -55,7 +55,7 @@
                timeout = setTimeout(fnCall, ms)
             }
          }
-      },
+      }
    };
 </script>
 
