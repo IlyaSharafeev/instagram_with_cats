@@ -30,8 +30,8 @@
          }
       },
       mounted() {
-         window.addEventListener("scroll", this.throttle(this.checkPosition, 5000))
-         window.addEventListener("resize", this.throttle(this.checkPosition, 5000))
+         window.addEventListener("scroll", this.throttle(this.checkPosition, 2000))
+         window.addEventListener("resize", this.throttle(this.checkPosition, 2000))
       },
       methods: {
          ...mapActions(["getImagesCatsFromApi"]),
