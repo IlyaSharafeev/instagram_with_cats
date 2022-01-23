@@ -26,33 +26,50 @@
       beforeMount() {
          window.addEventListener("scroll", this.trigger);
          if (this.getImagesCats.length == 0) {
-            this.debounce(this.getImagesCatsFromApi(), 2500)
+           this.getImagesCatsFromApi()
          }
+      },
+      mounted() {
+         window.addEventListener("scroll", this.throttle(this.checkPosition, 5000))
+         window.addEventListener("resize", this.throttle(this.checkPosition, 5000))
       },
       methods: {
          ...mapActions(["getImagesCatsFromApi"]),
-         trigger() {
+         checkPosition() {
+            // Нам потребуется знать высоту документа и высоту экрана.
             const height = document.body.offsetHeight
             const screenHeight = window.innerHeight
+
+            // Они могут отличаться: если на странице много контента,
+            // высота документа будет больше высоты экрана (отсюда и скролл).
+
+            // Записываем, сколько пикселей пользователь уже проскроллил.
             const scrolled = window.scrollY
-            var threshold = height - screenHeight / 4
+
+            // Обозначим порог, по приближении к которому
+            // будем вызывать какое-то действие.
+            // В нашем случае — четверть экрана до конца страницы.
+            const threshold = height - screenHeight / 4
+
             // Отслеживаем, где находится низ экрана относительно страницы.
-            var position = scrolled + screenHeight
+            const position = scrolled + screenHeight
 
             if (position >= threshold) {
-               this.debounce(this.getImagesCatsFromApi(), 200)
+               this.getImagesCatsFromApi()
             }
          },
-         debounce(fn, ms) {
-            let timeout;
-            return function () {
-               const fnCall = () => {
-                  fn.apply(this, arguments)
-               }
+         throttle(callee, timeout) {
+            let timer = null
 
-               clearTimeout(timeout)
+            return function perform(...args) {
+               if (timer) return
 
-               timeout = setTimeout(fnCall, ms)
+               timer = setTimeout(() => {
+                  callee(...args)
+
+                  clearTimeout(timer)
+                  timer = null
+               }, timeout)
             }
          }
       }
@@ -62,5 +79,14 @@
 <style>
    .main {
       margin-top: 5%;
+   }
+
+   .posts__loading {
+      width: 100%;
+      height: 1px;
+      border: 1px solid red;
+      position: relative;
+      bottom: 0px;
+      left: 0px;
    }
 </style>
